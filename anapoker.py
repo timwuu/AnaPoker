@@ -1,3 +1,5 @@
+# Analuze Poker Scenarios
+
 def comb(p,q):
 
     if( q==5):
