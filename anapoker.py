@@ -52,8 +52,4 @@ print( seq(52,50,49,48,47))
 # seq(m,n,p,q,r)  ;ordered
 
 # seq(m,n,p,q,r)
-# = seq(m,n,p,q,q-1) + (q-r)
-# /= seq(m,n,p,q+1,1) + 1 + (q-r)
-# /= seq(m,n,p+1,p,1) + 1 + (q-r)
-
 # = base(m,m-1,m-2,m-3,m-4) + diff4(m-1,n) + diff3(n-1,p) + diff2(p-1,q) + diff1(q-1,r)
