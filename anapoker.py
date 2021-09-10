@@ -27,6 +27,16 @@ def seq(m,n,p,q,r):
 
     return sum+1
 
+def seq2(m,n,p,q,r):
+
+    sum = 2598960
+    sum -= comb(m-1,5)
+    sum -= comb(n-1,4)
+    sum -= comb(p-1,3)
+    sum -= comb(q-1,2)
+    sum -= r
+
+    return sum+1
 
 i=0
 
@@ -48,8 +58,10 @@ print(i)
 print( comb(52,5))
 
 print( seq(52,51,50,48,1))
+print( seq2(52,51,50,48,1))
 
 print( seq(52,50,49,48,47))
+print( seq2(52,50,49,48,47))
 
 # seq(m,n,p,q,r)  ;ordered
 
