@@ -6,9 +6,59 @@ CARD_A = 14
 # global variables
 
 gRANK = 0
+gLST_RANK = [ 0 for i in range(2598960+1)]
 
 def card( num, pattern):
-    return num*4 + pattern
+    return num*4 + pattern - 7
+
+def card_pattern( n):
+    m=n-1
+    num = m//4+1
+    if( num==13):
+        s = 'A'
+    elif( num==12):
+        s = 'K'
+    elif( num==11):
+        s = 'Q'
+    elif( num==10):
+        s = 'J'
+    elif( num==9):
+        s = 'T'
+    else:
+        s = str(num+1)
+
+    suit = m%4
+    if( suit==3):
+        return 'S.'+s
+    elif( suit==2):
+        return 'H.'+s
+    elif( suit==1):
+        return 'D.'+s
+    else:
+        return 'C.'+s
+
+def card_lst(lst):
+    return [ card_pattern(lst[0]),card_pattern(lst[1]),card_pattern(lst[2]),card_pattern(lst[3]),card_pattern(lst[4])]
+
+def index( lst):
+
+    sum = 2598960
+    sum -= comb(lst[0]-1,5)
+    sum -= comb(lst[1]-1,4)
+    sum -= comb(lst[2]-1,3)
+    sum -= comb(lst[3]-1,2)
+    sum -= lst[4]
+
+    return sum+1
+
+def add_rank( rnk, m, n, p, q, r):
+    global gLST_RANK
+    lst = [m,n,p,q,r]
+    lst.sort( reverse=True)
+    idx=index(lst)
+    gLST_RANK[idx] = rnk
+
+    print( rnk, card_lst(lst), idx)
 
 def royal_flush():
     global gRANK
@@ -16,15 +66,24 @@ def royal_flush():
     col = []
     for i in range(3,-1,-1):
         col.append( ( card(CARD_A,i), card(13,i),card(12,i),card(11,i),card(10,i)))
+        add_rank( gRANK, card(CARD_A,i), card(13,i),card(12,i),card(11,i),card(10,i))
+
     return col
 
 def straight_flush():
     global gRANK
     col = []
-    for j in range(13,4,-1):
+    for j in range(13,5,-1):
         gRANK= gRANK+1
         for i in range(3,-1,-1):
             col.append( ( card(j,i), card(j-1,i),card(j-2,i),card(j-3,i),card(j-4,i)) )
+            add_rank( gRANK, card(j,i), card(j-1,i),card(j-2,i),card(j-3,i),card(j-4,i))
+
+    gRANK= gRANK+1
+    for i in range(3,-1,-1):
+        col.append( ( card(5,i), card(4,i),card(3,i),card(2,i),card(CARD_A,i)) )
+        add_rank( gRANK, card(5,i), card(4,i),card(3,i),card(2,i),card(CARD_A,i))
+
     return col
 
 def four_of_a_kind():
@@ -36,6 +95,8 @@ def four_of_a_kind():
                 gRANK= gRANK+1
                 for i in range(3,-1,-1):
                     col.append( ( card(j,3), card(j,2),card(j,1),card(j,0),card(k,i)) )
+                    add_rank( gRANK, card(j,3), card(j,2),card(j,1),card(j,0),card(k,i))
+                    
     return col
 
 def full_house():
@@ -51,6 +112,11 @@ def full_house():
                         col.append( ( card(j,3), card(j,2),card(j,0),card(k,m),card(k,n)) )
                         col.append( ( card(j,3), card(j,1),card(j,0),card(k,m),card(k,n)) )
                         col.append( ( card(j,2), card(j,1),card(j,0),card(k,m),card(k,n)) )
+       
+                        add_rank( gRANK, card(j,3), card(j,2),card(j,1),card(k,m),card(k,n)) 
+                        add_rank( gRANK, card(j,3), card(j,2),card(j,0),card(k,m),card(k,n)) 
+                        add_rank( gRANK, card(j,3), card(j,1),card(j,0),card(k,m),card(k,n)) 
+                        add_rank( gRANK, card(j,2), card(j,1),card(j,0),card(k,m),card(k,n))
     return col
 
 # not including straight flush
@@ -69,6 +135,7 @@ def flush():
                             gRANK= gRANK+1
                             for i in range(3,-1,-1):
                                col.append( ( card(j,i), card(k,i),card(l,i),card(m,i),card(n,i)) )
+                               add_rank( gRANK, card(j,i), card(k,i),card(l,i),card(m,i),card(n,i))
                         else:
                             is_straight=False
 
@@ -78,7 +145,7 @@ def flush():
 def straight():
     global gRANK
     col = []
-    for j in range(CARD_A,4,-1):
+    for j in range(CARD_A,5,-1):
         gRANK=gRANK+1
         for i1 in range(3,-1,-1):
             for i2 in range(3,-1,-1):
@@ -87,6 +154,19 @@ def straight():
                         for i5 in range(3,-1,-1):
                             if( not (i1==i2 and i1==i3 and i1==i4 and i1==i5)):
                                 col.append( ( card(j,i1), card(j-1,i2),card(j-2,i3),card(j-3,i4),card(j-4,i5)) )
+                                add_rank( gRANK, card(j,i1), card(j-1,i2),card(j-2,i3),card(j-3,i4),card(j-4,i5))
+                                
+
+    gRANK=gRANK+1
+    for i1 in range(3,-1,-1):
+        for i2 in range(3,-1,-1):
+            for i3 in range(3,-1,-1):
+                for i4 in range(3,-1,-1):
+                    for i5 in range(3,-1,-1):
+                        if( not (i1==i2 and i1==i3 and i1==i4 and i1==i5)):
+                            col.append( ( card(5,i1), card(4,i2),card(3,i3),card(2,i4),card(CARD_A,i5)) )
+                            add_rank( gRANK, card(5,i1), card(4,i2),card(3,i3),card(2,i4),card(CARD_A,i5))
+
     return col
 
 def three_of_a_kind():
@@ -240,11 +320,14 @@ print( len(four_of_a_kind()))
 print( len(full_house()))
 print( len(flush()))
 print( len(straight()))
+
+'''
+
 print( len(three_of_a_kind()))
 print( len(two_pair()))
 print( len(one_pair()))
 print( len(high_card()))
-
+'''
 print( "gRANK:", gRANK)
 
 '''
