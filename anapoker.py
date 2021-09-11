@@ -62,6 +62,19 @@ def flush():
 
     return col
 
+# not including straight flush
+def straight():
+    col = []
+    for j in range(CARD_A,4,-1):
+        for i1 in range(3,-1,-1):
+            for i2 in range(3,-1,-1):
+                for i3 in range(3,-1,-1):
+                    for i4 in range(3,-1,-1):
+                        for i5 in range(3,-1,-1):
+                            if( not (i1==i2 and i1==i3 and i1==i4 and i1==i5)):
+                                col.append( ( card(j,i1), card(j-1,i2),card(j-2,i3),card(j-3,i4),card(j-4,i5)) )
+    return col
+
 def comb(p,q):
 
     if( q==5):
@@ -119,6 +132,7 @@ print(i)
 
 print( comb(52,5))
 
+'''
 print( seq(52,51,50,48,1))
 print( seq2(52,51,50,48,1))
 
@@ -126,12 +140,15 @@ print( seq(52,50,49,48,47))
 print( seq2(52,50,49,48,47))
 
 print( seq2(5,4,3,2,1))
+'''
 
 print( len(royal_flush()))
 print( len(straight_flush()))
 print( len(four_of_a_kind()))
 print( len(full_house()))
 print( len(flush()))
+print( len(straight()))
+
 '''
 print( royal_flush())
 print( straight_flush())
