@@ -41,7 +41,7 @@ def full_house():
                             col.append( ( card(j,2), card(j,1),card(j,0),card(k,m),card(k,n)) )
     return col
 
-# including straight flush
+# not including straight flush
 def flush():
     col = []
     is_straight=False
