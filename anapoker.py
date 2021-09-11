@@ -53,10 +53,8 @@ def flush():
                 for m in range(l-1,2,-1):
                     for n in range(m-1,1,-1):
                         if not is_straight:
-                            col.append( ( card(j,3), card(k,3),card(l,3),card(m,3),card(n,3)) )
-                            col.append( ( card(j,2), card(k,2),card(l,2),card(m,2),card(n,2)) )
-                            col.append( ( card(j,1), card(k,1),card(l,1),card(m,1),card(n,1)) )
-                            col.append( ( card(j,0), card(k,0),card(l,0),card(m,0),card(n,0)) )
+                            for i in range(3,-1,-1):
+                               col.append( ( card(j,i), card(k,i),card(l,i),card(m,i),card(n,i)) )
                         else:
                             is_straight=False
 
@@ -73,6 +71,20 @@ def straight():
                         for i5 in range(3,-1,-1):
                             if( not (i1==i2 and i1==i3 and i1==i4 and i1==i5)):
                                 col.append( ( card(j,i1), card(j-1,i2),card(j-2,i3),card(j-3,i4),card(j-4,i5)) )
+    return col
+
+def two_pair():
+    col = []
+    for j in range(CARD_A,1,-1):
+        for k in range(j-1,1,-1):
+            for m in range(3,0,-1):
+                for n in range(m-1,-1,-1):
+                    for p in range(3,0,-1):
+                        for q in range(p-1,-1,-1):
+                            for s in range(CARD_A,1,-1):
+                                if( not (s==j or s==k)):
+                                    for i in range(3,-1,-1):
+                                        col.append( ( card(j,m), card(j,n),card(k,p),card(k,q),card(s,i)) )
     return col
 
 def comb(p,q):
@@ -148,6 +160,7 @@ print( len(four_of_a_kind()))
 print( len(full_house()))
 print( len(flush()))
 print( len(straight()))
+print( len(two_pair()))
 
 '''
 print( royal_flush())
