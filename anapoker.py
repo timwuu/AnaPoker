@@ -1,5 +1,46 @@
 # Analuze Poker Scenarios
 
+# constant
+CARD_A = 14
+
+def card( num, pattern):
+    return num*4 + pattern
+
+def royal_flush():
+    col = []
+    for i in range(3,-1,-1):
+        col.append( ( card(CARD_A,i), card(13,i),card(12,i),card(11,i),card(10,i)))
+    return col
+
+def straight_flush():
+    col = []
+    for j in range(13,4,-1):
+        for i in range(3,-1,-1):
+            col.append( ( card(j,i), card(j-1,i),card(j-2,i),card(j-3,i),card(j-4,i)) )
+    return col
+
+def four_of_a_kind():
+    col = []
+    for j in range(CARD_A,1,-1):
+        for k in range(CARD_A,1,-1):
+            for i in range(3,-1,-1):
+                if( j != k):
+                    col.append( ( card(j,3), card(j,2),card(j,1),card(j,0),card(k,i)) )
+    return col
+
+def full_house():
+    col = []
+    for j in range(CARD_A,1,-1):
+        for k in range(CARD_A,1,-1):
+                if( j != k):
+                    for m in range(3,-1,-1):
+                        for n in range(m-1,-1,-1):
+                            col.append( ( card(j,3), card(j,2),card(j,1),card(k,m),card(k,n)) )
+                            col.append( ( card(j,3), card(j,2),card(j,0),card(k,m),card(k,n)) )
+                            col.append( ( card(j,3), card(j,1),card(j,0),card(k,m),card(k,n)) )
+                            col.append( ( card(j,2), card(j,1),card(j,0),card(k,m),card(k,n)) )
+    return col
+
 def comb(p,q):
 
     if( q==5):
@@ -62,6 +103,21 @@ print( seq2(52,51,50,48,1))
 
 print( seq(52,50,49,48,47))
 print( seq2(52,50,49,48,47))
+
+print( seq2(5,4,3,2,1))
+
+print( len(royal_flush()))
+print( len(straight_flush()))
+print( len(four_of_a_kind()))
+print( len(full_house()))
+'''
+print( royal_flush())
+print( straight_flush())
+print( four_of_a_kind())
+'''
+
+#x=(1,2,3,4)
+#print( x[0],x[1])
 
 # seq(m,n,p,q,r)  ;ordered
 
