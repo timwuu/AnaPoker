@@ -25,6 +25,8 @@ gRANK = 0
 gLST_RANK = [ 0 for i in range(2598960+1)]
 gDICT_RANK = {}
 
+gCOMBIN_7_5 = []
+
 def card( num, pattern):
     return num*4 + pattern - 7
 
@@ -88,8 +90,7 @@ def card_key(lst):
 def card_lst(lst):
     result = map( card_pattern, lst)
     return list(result)
-    #return [ card_pattern(lst[0]),card_pattern(lst[1]),card_pattern(lst[2]),card_pattern(lst[3]),card_pattern(lst[4])]
-
+    
 def index( lst):
 
     sum = 2598960
@@ -115,6 +116,19 @@ def add_rank( rnk, m, n, p, q, r):
         #print( rnk, key)
 
     #print( rnk, card_lst(lst), idx)
+
+def get_rank( hand):
+    best_rank = 10000
+    for i in gCOMBIN_7_5:
+        lst= [ hand[i[0]],hand[i[1]],hand[i[2]],hand[i[3]],hand[i[4]]]
+        key= card_key(lst)
+        tmp = gDICT_RANK[key]
+        if( tmp < best_rank):
+            best_rank= tmp
+            best_key= key
+            best_comb = i
+
+    return best_rank, best_key, best_comb
 
 def royal_flush():
     global gRANK
@@ -355,22 +369,21 @@ def seq2(m,n,p,q,r):
 
     return sum+1
 
+print( gCOMBIN_7_5)
+
+
 i=0
 
-for m in range(7,0,-1):
-
-    for n in range(m-1,0,-1):
-        
-        for p in range(n-1,0,-1):
-
-            for q in range(p-1,0,-1):
-
-                for r in range(q-1,0,-1):
-
-                    #print( i,':', m,n,p)
+for m in range(0,7):
+    for n in range(m+1,7):
+        for p in range(n+1,7):
+            for q in range(p+1,7):
+                for r in range(q+1,7):
+                    gCOMBIN_7_5.append([m,n,p,q,r])
                     i=i+1
 
-print(i)
+#print(i)
+#print(gCOMBIN_7_5)
 
 print( comb(52,5))
 
@@ -386,7 +399,6 @@ print( seq2(5,4,3,2,1))
 print( len(royal_flush()))
 print( len(straight_flush()))
 print( len(four_of_a_kind()))
-
 print( len(full_house()))
 print( len(flush()))
 print( len(straight()))
@@ -398,6 +410,13 @@ print( len(high_card()))
 print( "gRANK:", gRANK)
 
 print( "size of DICT:", sys.getsizeof(gDICT_RANK))
+
+
+hand = [52, 51, 50, 4, 3, 2, 1]
+
+rnk = get_rank( hand)
+
+print( "rank:", rnk)
 
 #x=(1,2,3,4)
 #print( x[0],x[1])
