@@ -102,6 +102,47 @@ def two_pair():
                                         col.append( ( card(j,m), card(j,n),card(k,p),card(k,q),card(s,i)) )
     return col
 
+def one_pair():
+    col = []
+    for j in range(CARD_A,1,-1):
+        for s in range(CARD_A,1,-1):
+            for t in range(s-1,1,-1):
+                for u in range(t-1,1,-1):
+                    if( not (j==s or j==t or j==u)):
+                        for l in range(3,-1,-1):
+                            for m in range(3,-1,-1):
+                                for n in range(3,-1,-1):
+                                    col.append( ( card(j,3), card(j,2),card(s,l),card(t,m),card(u,n)) )
+                                    col.append( ( card(j,3), card(j,1),card(s,l),card(t,m),card(u,n)) )
+                                    col.append( ( card(j,3), card(j,0),card(s,l),card(t,m),card(u,n)) )
+                                    col.append( ( card(j,2), card(j,1),card(s,l),card(t,m),card(u,n)) )
+                                    col.append( ( card(j,2), card(j,0),card(s,l),card(t,m),card(u,n)) )
+                                    col.append( ( card(j,1), card(j,0),card(s,l),card(t,m),card(u,n)) )
+    return col
+
+def high_card():
+    col = []
+    is_straight=False
+    for j in range(CARD_A,6,-1): # Case (6,5,4,3,2)
+        is_straight=True
+        kk = 5 if (j==CARD_A) else 4  # Case (CARD_A,5,4,3,2)
+        for k in range(j-1,kk,-1):
+            for l in range(k-1,3,-1):
+                for m in range(l-1,2,-1):
+                    for n in range(m-1,1,-1):
+                        if not is_straight:
+                            for i1 in range(3,-1,-1):
+                                for i2 in range(3,-1,-1):
+                                    for i3 in range(3,-1,-1):
+                                        for i4 in range(3,-1,-1):
+                                            for i5 in range(3,-1,-1):
+                                                if( not (i1==i2 and i1==i3 and i1==i4 and i1==i5) ):
+                                                    col.append( ( card(j,i1), card(k,i2),card(l,i3),card(m,i4),card(n,i5)))
+                        else:
+                            is_straight=False
+
+    return col
+
 def comb(p,q):
 
     if( q==5):
@@ -177,6 +218,8 @@ print( len(flush()))
 print( len(straight()))
 print( len(three_of_a_kind()))
 print( len(two_pair()))
+print( len(one_pair()))
+print( len(high_card()))
 
 '''
 print( royal_flush())
