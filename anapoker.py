@@ -41,6 +41,27 @@ def full_house():
                             col.append( ( card(j,2), card(j,1),card(j,0),card(k,m),card(k,n)) )
     return col
 
+# including straight flush
+def flush():
+    col = []
+    is_straight=False
+    for j in range(CARD_A,6,-1): # Case (6,5,4,3,2)
+        is_straight=True
+        kk = 5 if (j==CARD_A) else 4  # Case (CARD_A,5,4,3,2)
+        for k in range(j-1,kk,-1):
+            for l in range(k-1,3,-1):
+                for m in range(l-1,2,-1):
+                    for n in range(m-1,1,-1):
+                        if not is_straight:
+                            col.append( ( card(j,3), card(k,3),card(l,3),card(m,3),card(n,3)) )
+                            col.append( ( card(j,2), card(k,2),card(l,2),card(m,2),card(n,2)) )
+                            col.append( ( card(j,1), card(k,1),card(l,1),card(m,1),card(n,1)) )
+                            col.append( ( card(j,0), card(k,0),card(l,0),card(m,0),card(n,0)) )
+                        else:
+                            is_straight=False
+
+    return col
+
 def comb(p,q):
 
     if( q==5):
@@ -110,6 +131,7 @@ print( len(royal_flush()))
 print( len(straight_flush()))
 print( len(four_of_a_kind()))
 print( len(full_house()))
+print( len(flush()))
 '''
 print( royal_flush())
 print( straight_flush())
