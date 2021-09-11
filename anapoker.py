@@ -3,46 +3,59 @@
 # constant
 CARD_A = 14
 
+# global variables
+
+gRANK = 0
+
 def card( num, pattern):
     return num*4 + pattern
 
 def royal_flush():
+    global gRANK
+    gRANK= gRANK+1
     col = []
     for i in range(3,-1,-1):
         col.append( ( card(CARD_A,i), card(13,i),card(12,i),card(11,i),card(10,i)))
     return col
 
 def straight_flush():
+    global gRANK
     col = []
     for j in range(13,4,-1):
+        gRANK= gRANK+1
         for i in range(3,-1,-1):
             col.append( ( card(j,i), card(j-1,i),card(j-2,i),card(j-3,i),card(j-4,i)) )
     return col
 
 def four_of_a_kind():
+    global gRANK
     col = []
     for j in range(CARD_A,1,-1):
         for k in range(CARD_A,1,-1):
-            for i in range(3,-1,-1):
-                if( j != k):
+            if( j != k):
+                gRANK= gRANK+1
+                for i in range(3,-1,-1):
                     col.append( ( card(j,3), card(j,2),card(j,1),card(j,0),card(k,i)) )
     return col
 
 def full_house():
+    global gRANK
     col = []
     for j in range(CARD_A,1,-1):
         for k in range(CARD_A,1,-1):
-                if( j != k):
-                    for m in range(3,-1,-1):
-                        for n in range(m-1,-1,-1):
-                            col.append( ( card(j,3), card(j,2),card(j,1),card(k,m),card(k,n)) )
-                            col.append( ( card(j,3), card(j,2),card(j,0),card(k,m),card(k,n)) )
-                            col.append( ( card(j,3), card(j,1),card(j,0),card(k,m),card(k,n)) )
-                            col.append( ( card(j,2), card(j,1),card(j,0),card(k,m),card(k,n)) )
+            if( j != k):
+                gRANK= gRANK+1
+                for m in range(3,-1,-1):
+                    for n in range(m-1,-1,-1):
+                        col.append( ( card(j,3), card(j,2),card(j,1),card(k,m),card(k,n)) )
+                        col.append( ( card(j,3), card(j,2),card(j,0),card(k,m),card(k,n)) )
+                        col.append( ( card(j,3), card(j,1),card(j,0),card(k,m),card(k,n)) )
+                        col.append( ( card(j,2), card(j,1),card(j,0),card(k,m),card(k,n)) )
     return col
 
 # not including straight flush
 def flush():
+    global gRANK
     col = []
     is_straight=False
     for j in range(CARD_A,6,-1): # Case (6,5,4,3,2)
@@ -53,6 +66,7 @@ def flush():
                 for m in range(l-1,2,-1):
                     for n in range(m-1,1,-1):
                         if not is_straight:
+                            gRANK= gRANK+1
                             for i in range(3,-1,-1):
                                col.append( ( card(j,i), card(k,i),card(l,i),card(m,i),card(n,i)) )
                         else:
@@ -62,8 +76,10 @@ def flush():
 
 # not including straight flush
 def straight():
+    global gRANK
     col = []
     for j in range(CARD_A,4,-1):
+        gRANK=gRANK+1
         for i1 in range(3,-1,-1):
             for i2 in range(3,-1,-1):
                 for i3 in range(3,-1,-1):
@@ -74,11 +90,13 @@ def straight():
     return col
 
 def three_of_a_kind():
+    global gRANK
     col = []
     for j in range(CARD_A,1,-1):
         for s in range(CARD_A,1,-1):
             for t in range(s-1,1,-1):
                 if( not (j==s or j==t)):
+                    gRANK= gRANK+1
                     for m in range(3,-1,-1):
                         for n in range(3,-1,-1):
                             col.append( ( card(j,3), card(j,2),card(j,1),card(s,m),card(t,n)) )
@@ -89,26 +107,30 @@ def three_of_a_kind():
     return col
 
 def two_pair():
+    global gRANK
     col = []
     for j in range(CARD_A,1,-1):
         for k in range(j-1,1,-1):
-            for m in range(3,0,-1):
-                for n in range(m-1,-1,-1):
-                    for p in range(3,0,-1):
-                        for q in range(p-1,-1,-1):
-                            for s in range(CARD_A,1,-1):
-                                if( not (s==j or s==k)):
-                                    for i in range(3,-1,-1):
-                                        col.append( ( card(j,m), card(j,n),card(k,p),card(k,q),card(s,i)) )
+            for s in range(CARD_A,1,-1):
+                if( not (s==j or s==k)):
+                    gRANK=gRANK+1    
+                    for m in range(3,0,-1):
+                        for n in range(m-1,-1,-1):
+                            for p in range(3,0,-1):
+                                for q in range(p-1,-1,-1):
+                                        for i in range(3,-1,-1):
+                                            col.append( ( card(j,m), card(j,n),card(k,p),card(k,q),card(s,i)) )
     return col
 
 def one_pair():
+    global gRANK
     col = []
     for j in range(CARD_A,1,-1):
         for s in range(CARD_A,1,-1):
             for t in range(s-1,1,-1):
                 for u in range(t-1,1,-1):
                     if( not (j==s or j==t or j==u)):
+                        gRANK+= 1
                         for l in range(3,-1,-1):
                             for m in range(3,-1,-1):
                                 for n in range(3,-1,-1):
@@ -121,6 +143,7 @@ def one_pair():
     return col
 
 def high_card():
+    global gRANK
     col = []
     is_straight=False
     for j in range(CARD_A,6,-1): # Case (6,5,4,3,2)
@@ -131,6 +154,7 @@ def high_card():
                 for m in range(l-1,2,-1):
                     for n in range(m-1,1,-1):
                         if not is_straight:
+                            gRANK+=1
                             for i1 in range(3,-1,-1):
                                 for i2 in range(3,-1,-1):
                                     for i3 in range(3,-1,-1):
@@ -220,6 +244,8 @@ print( len(three_of_a_kind()))
 print( len(two_pair()))
 print( len(one_pair()))
 print( len(high_card()))
+
+print( "gRANK:", gRANK)
 
 '''
 print( royal_flush())
