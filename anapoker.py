@@ -58,7 +58,7 @@ def add_rank( rnk, m, n, p, q, r):
     idx=index(lst)
     gLST_RANK[idx] = rnk
 
-    print( rnk, card_lst(lst), idx)
+    #print( rnk, card_lst(lst), idx)
 
 def royal_flush():
     global gRANK
@@ -184,6 +184,10 @@ def three_of_a_kind():
                             col.append( ( card(j,3), card(j,1),card(j,0),card(s,m),card(t,n)) )
                             col.append( ( card(j,2), card(j,1),card(j,0),card(s,m),card(t,n)) )
 
+                            add_rank( gRANK, card(j,3), card(j,2),card(j,1),card(s,m),card(t,n)) 
+                            add_rank( gRANK, card(j,3), card(j,2),card(j,0),card(s,m),card(t,n)) 
+                            add_rank( gRANK, card(j,3), card(j,1),card(j,0),card(s,m),card(t,n)) 
+                            add_rank( gRANK, card(j,2), card(j,1),card(j,0),card(s,m),card(t,n)) 
     return col
 
 def two_pair():
@@ -200,6 +204,7 @@ def two_pair():
                                 for q in range(p-1,-1,-1):
                                         for i in range(3,-1,-1):
                                             col.append( ( card(j,m), card(j,n),card(k,p),card(k,q),card(s,i)) )
+                                            add_rank( gRANK, card(j,m), card(j,n),card(k,p),card(k,q),card(s,i))
     return col
 
 def one_pair():
@@ -220,6 +225,14 @@ def one_pair():
                                     col.append( ( card(j,2), card(j,1),card(s,l),card(t,m),card(u,n)) )
                                     col.append( ( card(j,2), card(j,0),card(s,l),card(t,m),card(u,n)) )
                                     col.append( ( card(j,1), card(j,0),card(s,l),card(t,m),card(u,n)) )
+
+                                    add_rank( gRANK, card(j,3), card(j,2),card(s,l),card(t,m),card(u,n))
+                                    add_rank( gRANK, card(j,3), card(j,1),card(s,l),card(t,m),card(u,n))
+                                    add_rank( gRANK, card(j,3), card(j,0),card(s,l),card(t,m),card(u,n))
+                                    add_rank( gRANK, card(j,2), card(j,1),card(s,l),card(t,m),card(u,n))
+                                    add_rank( gRANK, card(j,2), card(j,0),card(s,l),card(t,m),card(u,n))
+                                    add_rank( gRANK, card(j,1), card(j,0),card(s,l),card(t,m),card(u,n))
+
     return col
 
 def high_card():
@@ -242,6 +255,7 @@ def high_card():
                                             for i5 in range(3,-1,-1):
                                                 if( not (i1==i2 and i1==i3 and i1==i4 and i1==i5) ):
                                                     col.append( ( card(j,i1), card(k,i2),card(l,i3),card(m,i4),card(n,i5)))
+                                                    add_rank( gRANK, card(j,i1), card(k,i2),card(l,i3),card(m,i4),card(n,i5))
                         else:
                             is_straight=False
 
@@ -320,21 +334,13 @@ print( len(four_of_a_kind()))
 print( len(full_house()))
 print( len(flush()))
 print( len(straight()))
-
-'''
-
 print( len(three_of_a_kind()))
 print( len(two_pair()))
 print( len(one_pair()))
 print( len(high_card()))
-'''
+
 print( "gRANK:", gRANK)
 
-'''
-print( royal_flush())
-print( straight_flush())
-print( four_of_a_kind())
-'''
 
 #x=(1,2,3,4)
 #print( x[0],x[1])
