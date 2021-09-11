@@ -1,5 +1,19 @@
 # Analuze Poker Scenarios
 
+# combination: C(52,5)=2,598,960
+# ranks: 7,462
+
+# ROYAL_FLUSH: 4
+# STRAIGHT_FLUSH: 36
+# FOUR_OF_A_KIND: 624
+# FULL_HOUSE: 3,744
+# FLUSH: 5,108
+# STRAIGHT: 10,200
+# THREE_OF_A_KIND: 54,912
+# TWO_PAIR: 123,552
+# ONE_PAIR: 1,098,240
+# HIGH_CARD: 1,302,540
+
 # constant
 CARD_A = 14
 
@@ -7,6 +21,7 @@ CARD_A = 14
 
 gRANK = 0
 gLST_RANK = [ 0 for i in range(2598960+1)]
+gDICT_RANK = {}
 
 def card( num, pattern):
     return num*4 + pattern - 7
@@ -37,8 +52,41 @@ def card_pattern( n):
     else:
         return 'C.'+s
 
+def card_no(n):
+    m=n-1
+    num = m//4+1
+    if( num==13):
+        s = 'A'
+    elif( num==12):
+        s = 'K'
+    elif( num==11):
+        s = 'Q'
+    elif( num==10):
+        s = 'J'
+    elif( num==9):
+        s = 'T'
+    else:
+        s = str(num+1)
+    
+    return s
+
+def card_is_same_suit(lst):
+    s = lst[0]%4
+    if( s== lst[1]%4 and s== lst[2]%4 and s== lst[3]%4 and s==lst[4]%4):
+        return True
+    return False
+
+def card_key(lst):
+    result = map( card_no, lst)
+    if card_is_same_suit(lst):
+        return ''.join(result)+'s'
+
+    return ''.join(result)
+
 def card_lst(lst):
-    return [ card_pattern(lst[0]),card_pattern(lst[1]),card_pattern(lst[2]),card_pattern(lst[3]),card_pattern(lst[4])]
+    result = map( card_pattern, lst)
+    return list(result)
+    #return [ card_pattern(lst[0]),card_pattern(lst[1]),card_pattern(lst[2]),card_pattern(lst[3]),card_pattern(lst[4])]
 
 def index( lst):
 
@@ -57,6 +105,12 @@ def add_rank( rnk, m, n, p, q, r):
     lst.sort( reverse=True)
     idx=index(lst)
     gLST_RANK[idx] = rnk
+
+    key= card_key(lst)
+
+    if key not in gDICT_RANK:
+        gDICT_RANK[key]=rnk
+        print( rnk, key)
 
     #print( rnk, card_lst(lst), idx)
 
@@ -327,10 +381,10 @@ print( seq2(52,50,49,48,47))
 
 print( seq2(5,4,3,2,1))
 '''
-
 print( len(royal_flush()))
 print( len(straight_flush()))
 print( len(four_of_a_kind()))
+
 print( len(full_house()))
 print( len(flush()))
 print( len(straight()))
