@@ -73,6 +73,21 @@ def straight():
                                 col.append( ( card(j,i1), card(j-1,i2),card(j-2,i3),card(j-3,i4),card(j-4,i5)) )
     return col
 
+def three_of_a_kind():
+    col = []
+    for j in range(CARD_A,1,-1):
+        for s in range(CARD_A,1,-1):
+            for t in range(s-1,1,-1):
+                if( not (j==s or j==t)):
+                    for m in range(3,-1,-1):
+                        for n in range(3,-1,-1):
+                            col.append( ( card(j,3), card(j,2),card(j,1),card(s,m),card(t,n)) )
+                            col.append( ( card(j,3), card(j,2),card(j,0),card(s,m),card(t,n)) )
+                            col.append( ( card(j,3), card(j,1),card(j,0),card(s,m),card(t,n)) )
+                            col.append( ( card(j,2), card(j,1),card(j,0),card(s,m),card(t,n)) )
+
+    return col
+
 def two_pair():
     col = []
     for j in range(CARD_A,1,-1):
@@ -160,6 +175,7 @@ print( len(four_of_a_kind()))
 print( len(full_house()))
 print( len(flush()))
 print( len(straight()))
+print( len(three_of_a_kind()))
 print( len(two_pair()))
 
 '''
