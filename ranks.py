@@ -1,3 +1,6 @@
+RANK_MAX = 7462
+RANK_MIN = 1
+
 ranks = dict()
 ranks["AKQJTs"]=1
 ranks["KQJT9s"]=2
