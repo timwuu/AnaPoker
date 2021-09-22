@@ -375,7 +375,7 @@ print( "size of DICT:", sys.getsizeof(gDICT_RANK))
 
 hand = [42, 31, 20, 4, 3, 2, 1]
 
-print( "Poker Hand:", list(map( card_pattern, hand)))
+print( "Poker Hand:", card_lst(hand))
 
 rnk = get_rank( hand)
 
