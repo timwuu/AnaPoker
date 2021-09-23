@@ -98,21 +98,3 @@ for m in range(0,7):
                 for r in range(q+1,7):
                     gCOMBIN_7_5.append([m,n,p,q,r])
                     i=i+1
-
-
-player_a = [52,51]
-player_b = [46,45]
-table_cards1 = []
-table_cards2 = [48,44,40]
-
-result = calc_win_rate( player_a, player_b, table_cards1, 10000)
-
-print( "{} vs {} with {}".format( card_lst(player_a), card_lst(player_b), card_lst(table_cards1)))
-
-print( "{:2.2%} vs {:2.2%}".format(result[0], result[1]))
-
-result = calc_win_rate( player_a, player_b, table_cards2, 10000)
-
-print( "{} vs {} with {}".format( card_lst(player_a), card_lst(player_b), card_lst(table_cards2)))
-
-print( "{:2.2%} vs {:2.2%}".format(result[0], result[1]))
