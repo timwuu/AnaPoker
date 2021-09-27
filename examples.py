@@ -63,3 +63,21 @@ pp( player_a, player_b, table_cards, k)
 table_cards = [52,46,22,18]
 
 pp( player_a, player_b, table_cards, k)
+
+# --- example 5 ---
+
+table_cards = [46,33,24]
+
+pp( player_a, player_b, table_cards, k)
+
+# --- example 5.2 ---
+
+table_cards = [46,34,24]
+
+pp( player_a, player_b, table_cards, k)
+
+# --- example 6 ---
+
+table_cards = [34,30,24]
+
+pp( player_a, player_b, table_cards, k)

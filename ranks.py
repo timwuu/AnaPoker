@@ -1,6 +1,32 @@
 RANK_MAX = 7462
 RANK_MIN = 1
 
+ki={'A':0, '2':1, '3':2, '4':3, '5':4, '6':5, '7':6, '8':7, '9':8, 'T':9, 'J':10, 'Q':11, 'K':12}
+
+rank_tree=[[] for x in range(13)]
+
+for i in rank_tree:
+    for x in range(13):
+        i.append([])
+
+for i in rank_tree:
+    for j in i:
+        for x in range(13):
+            j.append([])
+        
+for i in rank_tree:
+    for j in i:
+        for k in j:
+            for x in range(13):
+                k.append([])
+
+for i in rank_tree:
+    for j in i:
+        for k in j:
+            for l in k:
+                for x in range(13):
+                    l.append([RANK_MAX,RANK_MAX])
+
 ranks = dict()
 ranks["AKQJTs"]=1
 ranks["KQJT9s"]=2
@@ -7464,3 +7490,10 @@ ranks["76542"]=7459
 ranks["76532"]=7460
 ranks["76432"]=7461
 ranks["75432"]=7462
+
+for key, rank in ranks.items():
+    if len(key)==5:
+        rank_tree[ki[key[0]]][ki[key[1]]][ki[key[2]]][ki[key[3]]][ki[key[4]]][0]= rank
+    else:
+        rank_tree[ki[key[0]]][ki[key[1]]][ki[key[2]]][ki[key[3]]][ki[key[4]]][1]= rank
+        
