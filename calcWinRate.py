@@ -47,6 +47,22 @@ def get_rank( hand):
 
     return best_rank, best_key, best_comb
 
+def get_rank_b( hand):
+    best_rank = ranks.RANK_MAX
+    for i in gCOMBIN_7_5:
+        lst= (hand[i[0]],hand[i[1]],hand[i[2]],hand[i[3]],hand[i[4]])
+        key = list(map(lambda x:(x-1)//4, lst))
+        if card_is_same_suit(lst):
+            tmp = ranks.rank_tree_b[key[0]][key[1]][key[2]][key[3]][key[4]][1]
+        else:
+            tmp = ranks.rank_tree_b[key[0]][key[1]][key[2]][key[3]][key[4]][0]
+        if( tmp < best_rank):
+            best_rank= tmp
+            best_key= key
+            best_comb = i
+
+    return best_rank, best_key, best_comb
+
 def calc_win_rate( player_a, player_b, table_cards, k=10000):
 
     cards = [ x for x in range(1,53)]
@@ -91,10 +107,14 @@ def calc_win_rate( player_a, player_b, table_cards, k=10000):
 
 i=0
 
+tmp = []
+
 for m in range(0,7):
     for n in range(m+1,7):
         for p in range(n+1,7):
             for q in range(p+1,7):
                 for r in range(q+1,7):
-                    gCOMBIN_7_5.append([m,n,p,q,r])
+                    tmp.append([m,n,p,q,r])
                     i=i+1
+
+gCOMBIN_7_5 = tuple(tmp)

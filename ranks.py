@@ -1,7 +1,13 @@
+'''
+1. the performances of using ranks(dict), rank_tree(list[]) and rank_tree_b(tuple[]) are
+   pretty much the same.
+
+
+'''
 RANK_MAX = 7462
 RANK_MIN = 1
 
-ki={'A':0, '2':1, '3':2, '4':3, '5':4, '6':5, '7':6, '8':7, '9':8, 'T':9, 'J':10, 'Q':11, 'K':12}
+ki={'A':12, '2':0, '3':1, '4':2, '5':3, '6':4, '7':5, '8':6, '9':7, 'T':8, 'J':9, 'Q':10, 'K':11}
 
 rank_tree=[[] for x in range(13)]
 
@@ -7497,3 +7503,4 @@ for key, rank in ranks.items():
     else:
         rank_tree[ki[key[0]]][ki[key[1]]][ki[key[2]]][ki[key[3]]][ki[key[4]]][1]= rank
         
+rank_tree_b = tuple(rank_tree)
