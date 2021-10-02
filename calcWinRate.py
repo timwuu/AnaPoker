@@ -70,13 +70,16 @@ def calc_win_rate( player_a, player_b, table_cards, k=10000):
     for i in player_a:
         cards.remove(i)
 
-    for i in player_b:
-        cards.remove(i)
-
     for i in table_cards:
         cards.remove(i)
 
-    n = 5 - len(table_cards)
+    if player_b == []:
+        n = 7 - len(table_cards)
+    else:
+        n = 5 - len(table_cards)
+
+        for i in player_b:
+            cards.remove(i)
 
     win_a = 0
     win_b = 0
@@ -84,11 +87,15 @@ def calc_win_rate( player_a, player_b, table_cards, k=10000):
     for i in range(k):
         s = random.sample( cards, k=n)
 
-        pl_a = player_a + table_cards + s
-        pl_b = player_b + table_cards + s
+        if player_b == []:
+            pl_a = player_a + table_cards + s[2:]
+            pl_b = s[:2] + table_cards + s[2:]
+        else:
+            pl_a = player_a + table_cards + s
+            pl_b = player_b + table_cards + s
 
-        pl_a.sort( reverse= True)
-        pl_b.sort( reverse= True)
+        pl_a.sort() # 2021.10.02 not using "reverse=True"
+        pl_b.sort()
 
         rnk_a = get_rank( pl_a)
         rnk_b = get_rank( pl_b)
@@ -101,19 +108,17 @@ def calc_win_rate( player_a, player_b, table_cards, k=10000):
     return ( win_a/k, win_b/k)
 
 
-
-
-############## start of main program ##################
+############## setup combination array ##################
 
 i=0
 
 tmp = []
 
-for m in range(0,7):
-    for n in range(m+1,7):
-        for p in range(n+1,7):
-            for q in range(p+1,7):
-                for r in range(q+1,7):
+for m in range(6,-1,-1):
+    for n in range(m-1,-1,-1):
+        for p in range(n-1,-1,-1):
+            for q in range(p-1,-1,-1):
+                for r in range(q-1,-1,-1):
                     tmp.append([m,n,p,q,r])
                     i=i+1
 
