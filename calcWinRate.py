@@ -10,8 +10,9 @@ def card( num, pattern):
 def card_pattern( n):
    
     s = card_no(n)
-      
-    return ('S','C','D','H')[n%4] + '.' + s
+
+    return s + ('s','c','d','h')[n%4] # 2021.10.04 changed format
+    #return ('S','C','D','H')[n%4] + '.' + s
 
 def card_no(n):
 
@@ -100,7 +101,7 @@ def calc_win_rate( player_a, player_b, table_cards, k=10000):
         rnk_a = get_rank( pl_a)
         rnk_b = get_rank( pl_b)
 
-        if(rnk_a[0] < rnk_b[0]):  # bug fix: 2021.09.30
+        if(rnk_a[0] < rnk_b[0]):  # 2021.09.30 bug fix 
             win_a += 1
         elif( rnk_b[0] < rnk_a[0]):
             win_b += 1
